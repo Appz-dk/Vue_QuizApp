@@ -1,12 +1,25 @@
+<script lang="ts" setup>
+import type { TQuestion } from '@/types/types';
+import type { PropType } from 'vue';
+
+  
+  const { question } = defineProps({
+    question: {
+      required: true,
+      type: Object as PropType<TQuestion>
+    }
+  })
+</script>
+
 <template>
   <div class="question-container">
-      <h1>What color is the sun ?</h1>
+      <h1>{{ question.text }}</h1>
   </div>
   <div class="options-container">
-    <div class="option" role="option">
-      <p class="option-label">A</p>
+    <div class="option" role="option" v-for="option in question.options" :key="option.id">
+      <p class="option-label">{{ option.label }}</p>
       <div class="option-value">
-        <p>Yellow</p>
+        <p>{{ option.text }}</p>
       </div>
     </div>
   </div>
@@ -23,6 +36,7 @@
     align-items: center;
     height: 40px;
     cursor: pointer;
+    margin-bottom: 1.75rem;
   }
 
   .option-label {
