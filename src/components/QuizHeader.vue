@@ -1,6 +1,17 @@
+<script lang="ts" setup>
+
+  const { quizState } = defineProps({
+    quizState: {
+      required: true,
+      type: String
+    }
+  })
+
+</script>
+
 <template>
   <header>
-    <h4>Questions 1/3</h4>
+    <h4>Questions {{ quizState }}</h4>
     <div class="bar">
       <div class="completion"></div>
     </div>
