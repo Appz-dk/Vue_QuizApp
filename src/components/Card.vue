@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import type { TQuiz } from "@/types/types";
   import { defineProps, type PropType } from "vue"
+  import { useRouter } from "vue-router"
 
   const { quiz } = defineProps({
     quiz: {
@@ -8,10 +9,12 @@
       type: Object as PropType<TQuiz>
     }
   })
+
+  const router = useRouter()
 </script>
 
 <template>
-  <div class="quiz-card">
+  <div class="quiz-card" @click="router.push(`/quizes/${quiz.id}`)">
     <img :src="quiz.img" />
     <div class="card-text">
       <h2>{{ quiz.name }}</h2>
