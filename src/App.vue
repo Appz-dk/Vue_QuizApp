@@ -1,19 +1,29 @@
 <script setup lang="ts">
+  import qData from "@/assets/data.json"
+  import { ref, watch } from "vue"
+
+  const quizes = ref(qData)
+  const searchStr = ref("")
+
+  watch(searchStr, () => {
+    quizes.value = qData.filter(q => q.name.toLowerCase().includes(searchStr.value.toLowerCase()))
+  })
+
 </script>
 
 <template>
   <div class="container">
     <header>
       <h1>Quizes</h1>
-      <input type="text" placeholder="Search..."/>
+      <input v-model.trim="searchStr" type="text" placeholder="Search..."/>
     </header>
     <main>
       <div class="quiz-container">
-        <div class="quiz-card">
-          <img src="https://i.ytimg.com/vi/Kp2bYWRQylk/maxresdefault.jpg"/>
+        <div v-for="quiz in quizes" :key="quiz.id" class="quiz-card">
+          <img :src="quiz.img"/>
           <div class="card-text">
-            <h2>Math</h2>
-            <p>15 Questions</p>
+            <h2>{{ quiz.name }}</h2>
+            <p>{{ quiz.questions.length }} Questions</p>
           </div>
         </div>
       </div>
