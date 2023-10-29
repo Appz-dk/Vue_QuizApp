@@ -15,7 +15,7 @@ export const router = createRouter({
       redirect: "/"
     },
     {
-      path: "/quiz/:id",
+      path: "/quiz/:quizId",
       name: "quiz",
       component: QuizView
     }
