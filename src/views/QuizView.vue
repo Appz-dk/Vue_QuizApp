@@ -3,7 +3,7 @@
   import Question from "@/components/Question.vue"
   import QuizHeader from "@/components/QuizHeader.vue"
   import quizData from "@/assets/data.json"
-  import { ref, watch, computed } from "vue";
+  import { ref, computed } from "vue";
 
   const route = useRoute()
   const quizId = route.params.quizId as string
