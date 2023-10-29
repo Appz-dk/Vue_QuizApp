@@ -4,6 +4,10 @@
     quizState: {
       required: true,
       type: String
+    },
+    completionProcent: {
+      required: true,
+      type: Number
     }
   })
 
@@ -13,7 +17,7 @@
   <header>
     <h4>Questions {{ quizState }}</h4>
     <div class="bar">
-      <div class="completion"></div>
+      <div class="completion" :style="{width: `${completionProcent}%`}"></div>
     </div>
   </header>
 </template>

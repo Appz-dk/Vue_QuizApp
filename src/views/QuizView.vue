@@ -3,25 +3,22 @@
   import Question from "@/components/Question.vue"
   import QuizHeader from "@/components/QuizHeader.vue"
   import quizData from "@/assets/data.json"
-  import { ref, watch } from "vue";
+  import { ref, watch, computed } from "vue";
 
   const route = useRoute()
   const quizId = route.params.quizId as string
 
   const currentQuestionIndex = ref(0)
-  const currentQuiz = quizData.find(quiz => quiz.id === parseInt(quizId))
-  const currentQuestion = ref(currentQuiz?.questions[currentQuestionIndex.value])
-  const quizState = ref(`${currentQuestionIndex.value + 1}/${currentQuiz?.questions.length}`)
+  const quiz = quizData.find(quiz => quiz.id === parseInt(quizId))
+  const currentQuestion = computed(() => quiz?.questions[currentQuestionIndex.value])
+  const quizState = computed(() => `${currentQuestionIndex.value + 1}/${quiz?.questions.length}`)
+  const completionProcent = computed(() => (currentQuestionIndex.value / (quiz?.questions?.length || 1)) * 100)
 
-  watch(() => currentQuestionIndex.value, () => {
-    quizState.value = `${currentQuestionIndex.value + 1}/${currentQuiz?.questions.length}`
-    currentQuestion.value = currentQuiz?.questions[currentQuestionIndex.value]
-  })
 </script>
 
 <template>
-  <div v-if="currentQuiz" class="quiz-container">
-    <QuizHeader :quizState="quizState" />
+  <div v-if="quiz" class="quiz-container">
+    <QuizHeader :quizState="quizState" :completionProcent="completionProcent"/>
     <Question v-if="currentQuestion" :question="currentQuestion" />
   </div>
   <button @click="currentQuestionIndex++">Next Question</button>
