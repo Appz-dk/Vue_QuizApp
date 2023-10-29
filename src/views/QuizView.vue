@@ -13,13 +13,21 @@
   const currentQuestion = computed(() => quiz?.questions[currentQuestionIndex.value])
   const quizState = computed(() => `${currentQuestionIndex.value + 1}/${quiz?.questions.length}`)
   const completionProcent = computed(() => (currentQuestionIndex.value / (quiz?.questions?.length || 1)) * 100)
+  const correctAnswers = ref(0)
+
+  const optionSelectedHandler = (isCorrect: boolean) => {
+    if (isCorrect) {
+      correctAnswers.value += 1
+    }
+    currentQuestionIndex.value += 1
+  }
 
 </script>
 
 <template>
   <div v-if="quiz" class="quiz-container">
     <QuizHeader :quizState="quizState" :completionProcent="completionProcent"/>
-    <Question v-if="currentQuestion" :question="currentQuestion" />
+    <Question v-if="currentQuestion" :question="currentQuestion" @selectOption="optionSelectedHandler"/>
   </div>
   <button @click="currentQuestionIndex++">Next Question</button>
 </template>

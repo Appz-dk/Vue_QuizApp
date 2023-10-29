@@ -2,6 +2,9 @@
 import type { TQuestion } from '@/types/types';
 import type { PropType } from 'vue';
 
+  const emit = defineEmits<{
+    (event: "selectOption", correct: boolean): void
+  }>()
   
   const { question } = defineProps({
     question: {
@@ -9,6 +12,10 @@ import type { PropType } from 'vue';
       type: Object as PropType<TQuestion>
     }
   })
+
+  const optionSelectedHandler = (isCorrect: boolean) => {
+    emit("selectOption", isCorrect)
+  }
 </script>
 
 <template>
@@ -16,7 +23,12 @@ import type { PropType } from 'vue';
       <h1>{{ question.text }}</h1>
   </div>
   <div class="options-container">
-    <div class="option" role="option" v-for="option in question.options" :key="option.id">
+    <div 
+    class="option" 
+    role="option" 
+    v-for="option in question.options" :key="option.id" 
+    @click="optionSelectedHandler(option.isCorrect)"
+    >
       <p class="option-label">{{ option.label }}</p>
       <div class="option-value">
         <p>{{ option.text }}</p>
