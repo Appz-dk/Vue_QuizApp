@@ -14,7 +14,7 @@
 </script>
 
 <template>
-  <div class="quiz-card" @click="router.push(`/quizes/${quiz.id}`)">
+  <div class="quiz-card" @click="router.push(`/quiz/${quiz.id}`)">
     <img :src="quiz.img" />
     <div class="card-text">
       <h2>{{ quiz.name }}</h2>
