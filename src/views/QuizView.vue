@@ -14,7 +14,7 @@
   const quiz = quizData.find(quiz => quiz.id === parseInt(quizId))
   const currentQuestion = computed(() => quiz?.questions[currentQuestionIndex.value])
   const quizLength = computed(() => quiz?.questions.length || 0)
-  const quizState = computed(() => `${currentQuestionIndex.value + 1}/${quizLength.value}`)
+  const quizState = computed(() => `${currentQuestionIndex.value}/${quizLength.value}`)
   const completionProcent = computed(() => (currentQuestionIndex.value / quizLength.value) * 100)
   const quizOver = computed(() => currentQuestionIndex.value >= quizLength.value)
   const correctAnswers = ref(0)
@@ -24,11 +24,8 @@
       correctAnswers.value += 1
     }
 
-      currentQuestionIndex.value += 1
-  }
-
-  const getQuizResult = () => {
-    return `You got ${correctAnswers.value} out of ${quizLength.value} questions correct`
+    if (currentQuestionIndex.value === quizLength.value) return
+    currentQuestionIndex.value += 1
   }
 
 </script>
@@ -37,7 +34,7 @@
   <div class="quiz-container">
     <QuizHeader :quizState="quizState" :completionProcent="completionProcent"/>
     <Question v-if="currentQuestion && !quizOver" :question="currentQuestion" @selectOption="optionSelectedHandler"/>
-    <QuizResult v-else :result="getQuizResult()" />
+    <QuizResult v-else :quizLength="quizLength" :correctAnswers="correctAnswers" />
   </div>
 </template>
 

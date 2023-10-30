@@ -2,9 +2,13 @@
   import { useRouter } from "vue-router"
 
   const props = defineProps({
-    result: {
+    quizLength: {
       required: true,
-      type: String
+      type: Number
+    },
+    correctAnswers: {
+      required: true,
+      type: Number
     }
   })
 
@@ -17,7 +21,7 @@
 <template>
   <div class="results">
     <h1>Quiz over!</h1>
-    <p>{{ props.result }}</p>
+    <p>{{ `You got ${props.correctAnswers} out of ${props.quizLength} questions correct` }}</p>
     <button @click="navigateToQuizes">Back to quizes</button>
   </div>
 </template>
